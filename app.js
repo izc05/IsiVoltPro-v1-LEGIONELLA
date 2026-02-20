@@ -442,13 +442,13 @@ async function markIssue(){
   t.paused = false;
   stopRaf();
 
-  const reason = prompt("Incidencia (rápido):
+  const reason = prompt(`Incidencia (rápido):
 - No accesible
 - Bomba no arranca
 - Sin retorno
 - Fuga
 
-Escribe una frase corta:");
+Escribe una frase corta:`);
   if (reason == null) return;
 
   $("timerCode").textContent = code;
@@ -749,10 +749,10 @@ async function openMonthly(){
         await openMonthly();
       });
       el.querySelector('[data-na="1"]').addEventListener("click", async ()=>{
-        const r = prompt("No aplica (motivo):
+        const r = prompt(`No aplica (motivo):
 - Exterior (otra empresa)
 - Parking sin tomas
-- No corresponde este mes", it.note || "Exterior (otra empresa)");
+- No corresponde este mes`, it.note || "Exterior (otra empresa)");
         if (r == null) return;
         it.status = "na";
         it.updatedAt = Date.now();
@@ -791,8 +791,8 @@ async function addMonthlyQuick(code, water){
                 : String(el||"").toUpperCase().startsWith("FRE") ? "Fregadero"
                 : String(el||"").toUpperCase().startsWith("O") ? "Otro"
                 : "Ducha";
-  const desc = prompt("Descripción corta (opcional):
-Ej: 2ª Planta · Hab 21024 · Aseo", "") ?? "";
+  const desc = prompt(`Descripción corta (opcional):
+Ej: 2ª Planta · Hab 21024 · Aseo`, "") ?? "";
 
   await dbPutMonthly({
     key: `${tech}|${month}|${plant}|${water}|${c}`,
@@ -1085,10 +1085,10 @@ function init(){
   $("btnMonthly").addEventListener("click", ()=> openMonthly());
 
   $("btnExplainOT").addEventListener("click", ()=>{
-    alert("OT de hoy = la lista de puntos que vas a hacer hoy.
+    alert(`OT de hoy = la lista de puntos que vas a hacer hoy.
 
 Se crea añadiendo puntos (QR o código).
-Cuando completas un punto, queda ✅ y se guarda en el historial.");
+Cuando completas un punto, queda ✅ y se guarda en el historial.`);
   });
 
   $("btnClearOT").addEventListener("click", async ()=>{
