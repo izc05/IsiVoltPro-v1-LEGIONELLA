@@ -63,3 +63,41 @@ Después de eso, el PR debería pasar de **"not mergeable"** a **mergeable**.
 ## Nota para este repo
 
 Los conflictos suelen caer en `app.js` e `index.html` porque concentran la mayoría de cambios de UI y lógica.
+
+## Caso exacto de tu captura (3 conflictos en `app.js`)
+
+Si GitHub te muestra conflictos en la zona de `loginWithTech`, `doLogin` y `btnGuestAccess`, conserva este bloque final (tal cual):
+
+```js
+async function loginWithTech(name){
+  const safeName = String(name || "").trim().slice(0, 18);
+  if (!safeName) return toast("Escribe el nombre del técnico.");
+  state.tech = safeName;
+  localStorage.setItem("isivolt.tech", safeName);
+  $("techName").value = safeName;
+  show("home");
+  await refreshOT();
+}
+
+async function doLogin(){
+  const name = getTechNameFromUI();
+  await loginWithTech(name);
+}
+
+$("btnSetTech").addEventListener("click", async ()=>{
+  await doLogin();
+});
+$("techName").addEventListener("keydown", async (e)=>{
+  if (e.key === "Enter") await doLogin();
+});
+$("btnGuestAccess").addEventListener("click", async ()=>{
+  await loginWithTech(DEFAULT_GUEST_TECH);
+  toast(`Acceso rápido activo: ${DEFAULT_GUEST_TECH}`);
+});
+```
+
+En el editor de conflictos de GitHub:
+- Para esos 3 bloques, usa **Accept current change** (rama del PR), no **Accept both**.
+- Verifica que no queden marcadores `<<<<<<<`, `=======`, `>>>>>>>`.
+- Haz **Mark as resolved** y luego **Commit merge**.
+
